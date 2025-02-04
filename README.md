@@ -45,6 +45,7 @@ This Warehouse Management System (WMS) is designed for a **medium-sized, general
 | **Notification & Alerts Service** | Sends alerts for stock shortages, order delays, machine failures | "What needs immediate attention and how make everyone REACT?" |
 | **Reports & Analytics Service** | Provides dashboards, efficiency tracking, real-time insights | "What are the key metrics and insights?" |
 | **UI Service** | Manages frontend interfaces, dashboards, and user interactions | "How do users interact with the system?" |
+| **GitOps** | Manages deployments | "Where and how we are deployed?" |
 
 ## 🚀 Next Steps
 - **Optimize Deployment Strategies:** Kubernetes scaling, serverless options
