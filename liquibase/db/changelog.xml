@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.19.xsd">
+
+    <changeSet id="1" author="Oleksii the Cat">
+        <sqlFile path="changelogs/001_initial_schema.sql"
+                 splitStatements="false"
+                 stripComments="true"/>
+        <rollback>
+            DROP TRIGGER IF EXISTS update_products_updated_at ON wms_schema.products;
+            DROP FUNCTION IF EXISTS wms_schema.update_updated_at_column();
+            DROP INDEX IF EXISTS idx_stock_movements_created_at;
+            DROP INDEX IF EXISTS idx_stock_movements_product_id;
+            DROP INDEX IF EXISTS idx_products_sku;
+            DROP TABLE IF EXISTS wms_schema.stock_movements;
+            DROP TABLE IF EXISTS wms_schema.stock;
+            DROP TABLE IF EXISTS wms_schema.locations;
+            DROP TABLE IF EXISTS wms_schema.products;
+            DROP SCHEMA IF EXISTS wms_schema;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

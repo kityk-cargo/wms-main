@@ -1,0 +1,1 @@
+docker run --rm -v "%cd%":/lb liquibase/liquibase sh /lb/scripts/update.sh /lb/db liquibase-docker-local.properties
