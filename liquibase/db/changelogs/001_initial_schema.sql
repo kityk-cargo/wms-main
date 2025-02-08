@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS wms_schema.stock (
     product_id BIGINT REFERENCES wms_schema.products(id),
     location_id BIGINT REFERENCES wms_schema.locations(id),
     quantity INTEGER NOT NULL DEFAULT 0,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (product_id, location_id)
 );
 
