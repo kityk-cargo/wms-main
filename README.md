@@ -54,6 +54,7 @@ This Warehouse Management System (WMS) is designed for a **medium-sized, general
 | **Reports & Analytics Service**   | [wms-reports](https://github.com/kityk-cargo/wms-reports)                           | Provides dashboards, efficiency tracking, real-time insights       | "What are the key metrics and insights?"                    | Python (FastAPI), GraphQL, PostgreSQL, SQLAlchemy, Apache Kafka                        |
 | **UI Service**                    | [wms-ui](https://github.com/kityk-cargo/wms-ui)                                     | Manages frontend interfaces, dashboards, and user interactions     | "How do users interact with the system?"                    | React.js (Next.js), Tailwind CSS or Material UI, RTK Query / Redux Toolkit, WebSockets |
 | **GitOps**                        | [wms-gitops](https://github.com/kityk-cargo/wms-gitops)                             | Manages deployments                                                | "Where and how we are deployed?"                             | Docker, Kubernetes (K8s), GitHub Actions                                               |
+| **Contracts**                     | [wms-contracts](https://github.com/kityk-cargo/wms-contracts)                      | Holds inter-service communication contracts | "Who is talking with who about what? And how" | Pact |
 
 ## 🚀 Next Steps
 
