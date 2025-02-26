@@ -56,6 +56,75 @@ This Warehouse Management System (WMS) is designed for a **medium-sized, general
 | **GitOps**                        | [wms-gitops](https://github.com/kityk-cargo/wms-gitops)                             | Manages deployments                                                | "Where and how we are deployed?"                             | Docker, Kubernetes (K8s), GitHub Actions                                               |
 | **Contracts**                     | [wms-contracts](https://github.com/kityk-cargo/wms-contracts)                      | Holds inter-service communication contracts | "Who is talking with who about what? And how" | Pact |
 
+
+# Order Processing Flow (MVP)
+
+This document outlines the minimal viable process for handling an order in the Warehouse Management System (WMS).
+
+Not all of the services here exist. Probably some of them wil end up not existing in the end.
+
+## 1. Order Creation
+
+- **Customer** places an order through an online platform or a sales representative.
+- **Sales Representative** may manually enter orders for customers.
+- **Service:** `order-service` - Handles the creation and management of customer orders.
+- **External Integrations:**
+  - E-commerce platforms: `Shopify`, `Magento`
+  - CRM systems for customer data synchronization
+
+## 2. Order Processing
+
+- **Order Management System (OMS)** validates the order and checks inventory.
+- **Inventory Manager** ensures stock is allocated for fulfillment.
+- **Services:**
+  - `inventory-service` - Manages inventory levels and allocates stock for orders.
+  - `scheduling-service` - Schedules orders for fulfillment based on inventory and capacity.
+- **External Integrations:**
+  - ERP systems for inventory updates
+  - Supplier systems for stock replenishment
+
+## 3. Picking
+
+- **Warehouse Operatives** retrieve products from storage.
+- **Automated Systems (AGVs, barcode/RFID scanners)** assist in locating and transporting items.
+- **Services:**
+  - `order-service` - Generates pick lists and coordinates the picking process.
+  - `automation-service` - Integrates with AGVs and automation tools for efficient picking.
+- **External Integrations:**
+  - IoT devices: `RFID scanners`, `barcode systems` for real-time tracking
+  - Warehouse robotics API
+
+## 4. Packing
+
+- **Packing Staff** inspect, package, and label items for shipping.
+- **Service:** `order-service` - Manages the packing process, ensuring items are correctly packaged and labeled.
+- **External Integrations:**
+  - Label printing systems
+  - Packaging automation solutions
+
+## 5. Shipping
+
+- **Shipping Coordinators** organize shipments and assign carriers.
+- **Logistics Partners/Carriers** transport packages to the customer.
+- **Service:** `order-service` - Organizes shipments, assigns carriers, and tracks deliveries.
+- **External Integrations:**
+  - Courier services: `FedEx`, `UPS`, `DHL`
+  - Transportation management systems (TMS)
+
+## 6. Delivery Confirmation
+
+- **Customer Service Representatives** provide updates on order status.
+- **Accounting Department** finalizes financial transactions post-delivery.
+- **Services:**
+  - `notification-service` - Sends updates to customers regarding order status and delivery confirmations.
+  - `order-service` - Handles financial transactions, invoicing, and payment processing post-delivery.
+- **External Integrations:**
+  - Payment gateways: `Stripe`, `PayPal`
+  - Customer support platforms: `Zendesk`, `Salesforce Service Cloud`
+
+This flow ensures efficient order fulfillment, leveraging automation, external integrations, and human roles to optimize warehouse operations.
+
+
 ## 🚀 Next Steps
 
 - **Optimize Deployment Strategies:** Kubernetes scaling, serverless options
