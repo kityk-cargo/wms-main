@@ -66,13 +66,70 @@ CREATE TRIGGER update_products_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION wms_schema.update_updated_at_column();
 
---rollback DROP TRIGGER IF EXISTS update_products_updated_at ON wms_schema.products;
---rollback DROP FUNCTION IF EXISTS wms_schema.update_updated_at_column();
---rollback DROP INDEX IF EXISTS idx_stock_movements_created_at;
---rollback DROP INDEX IF EXISTS idx_stock_movements_product_id;
---rollback DROP INDEX IF EXISTS idx_products_sku;
---rollback DROP TABLE IF EXISTS wms_schema.stock_movements;
---rollback DROP TABLE IF EXISTS wms_schema.stock;
---rollback DROP TABLE IF EXISTS wms_schema.locations;
---rollback DROP TABLE IF EXISTS wms_schema.products;
---rollback DROP SCHEMA IF EXISTS wms_schema;
+-- Customers Table
+CREATE TABLE IF NOT EXISTS wms_schema.customers (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(20),
+    address TEXT,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Orders Table
+CREATE TABLE IF NOT EXISTS wms_schema.orders (
+    id BIGSERIAL PRIMARY KEY,
+    customer_id BIGINT REFERENCES wms_schema.customers(id),
+    order_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) NOT NULL, -- e.g., 'Pending', 'Processing', 'Shipped', 'Delivered'
+    total_amount DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Order Items Table
+CREATE TABLE IF NOT EXISTS wms_schema.order_items (
+    id BIGSERIAL PRIMARY KEY,
+    order_id BIGINT REFERENCES wms_schema.orders(id),
+    product_id BIGINT REFERENCES wms_schema.products(id),
+    quantity INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL, -- Price at the time of order
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Inventory Table
+CREATE TABLE IF NOT EXISTS wms_schema.inventory (
+    id BIGSERIAL PRIMARY KEY,
+    product_id BIGINT REFERENCES wms_schema.products(id),
+    location_id BIGINT REFERENCES wms_schema.locations(id),
+    quantity INT NOT NULL CHECK (quantity >= 0),
+    last_updated TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Shipments Table
+CREATE TABLE IF NOT EXISTS wms_schema.shipments (
+    id BIGSERIAL PRIMARY KEY,
+    order_id BIGINT REFERENCES wms_schema.orders(id),
+    shipment_date TIMESTAMPTZ,
+    carrier VARCHAR(100),
+    tracking_number VARCHAR(100),
+    status VARCHAR(50) NOT NULL, -- e.g., 'Awaiting Pickup', 'In Transit', 'Delivered'
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Payments Table
+CREATE TABLE IF NOT EXISTS wms_schema.payments (
+    id BIGSERIAL PRIMARY KEY,
+    order_id BIGINT REFERENCES wms_schema.orders(id),
+    payment_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50), -- e.g., 'Credit Card', 'PayPal', 'Bank Transfer'
+    transaction_id VARCHAR(100),
+    status VARCHAR(50) NOT NULL, -- e.g., 'Pending', 'Completed', 'Failed'
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
