@@ -8,7 +8,8 @@
     <changeSet id="1" author="Oleksii the Cat">
         <sqlFile path="changelogs/001_initial_schema.sql"
                  splitStatements="false"
-                 stripComments="true"/>
+                 stripComments="true"
+                 relativeToChangelogFile="true"/>
         <rollback>
             DROP TRIGGER IF EXISTS update_products_updated_at ON wms_schema.products;
             DROP FUNCTION IF EXISTS wms_schema.update_updated_at_column();
