@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This changelog is for test environments ONLY.
+     To run tests, execute:
+     liquibase update -contexts=test -changeLogFile=db/changelog-test.xml
+     Do NOT use this file in production! -->
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.19.xsd">
+
+    <!-- Include production changelog (non‑test changesets) -->
+    <include file="changelog.xml" relativeToChangelogFile="true"/>
+    
+    <!-- Add test data changeset (only active when 'test' context is specified) -->
+    <changeSet id="002_test_data" author="Oleksii the Cat" context="test">
+        <sqlFile path="changelogs/002_test_data.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="false"
+                 stripComments="true"/>
+        <rollback>
+            DELETE FROM wms_schema.stock 
+              WHERE (product_id = 1 AND location_id = 1)
+                 OR (product_id = 2 AND location_id = 2)
+                 OR (product_id = 1 AND location_id = 3);
+            DELETE FROM wms_schema.locations WHERE id IN (1,2,3,4,5,6,7,8,9,10);
+            DELETE FROM wms_schema.order_items WHERE id IN (1,2);
+            DELETE FROM wms_schema.orders WHERE id IN (1,2);
+            DELETE FROM wms_schema.customers WHERE id IN (1,2);
+            DELETE FROM wms_schema.products WHERE id IN (1,2);
+        </rollback>
+    </changeSet>
+    
+</databaseChangeLog>

@@ -99,15 +99,6 @@ CREATE TABLE IF NOT EXISTS wms_schema.order_items (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Inventory Table
-CREATE TABLE IF NOT EXISTS wms_schema.inventory (
-    id BIGSERIAL PRIMARY KEY,
-    product_id BIGINT REFERENCES wms_schema.products(id),
-    location_id BIGINT REFERENCES wms_schema.locations(id),
-    quantity INT NOT NULL CHECK (quantity >= 0),
-    last_updated TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
-);
-
 -- Shipments Table
 CREATE TABLE IF NOT EXISTS wms_schema.shipments (
     id BIGSERIAL PRIMARY KEY,
