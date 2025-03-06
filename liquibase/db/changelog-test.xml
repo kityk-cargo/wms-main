@@ -10,7 +10,7 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.19.xsd">
 
     <!-- Include production changelog (non‑test changesets) -->
-    <include file="changelog.xml" relativeToChangelogFile="true"/>
+    <include file="./changelog.xml" relativeToChangelogFile="true"/>
     
     <!-- Add test data changeset (only active when 'test' context is specified) -->
     <changeSet id="002_test_data" author="Oleksii the Cat" context="test">
