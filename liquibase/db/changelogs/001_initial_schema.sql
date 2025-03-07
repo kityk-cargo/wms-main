@@ -88,10 +88,9 @@ CREATE TABLE IF NOT EXISTS wms_schema.orders (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Order Items Table
 CREATE TABLE IF NOT EXISTS wms_schema.order_items (
     id BIGSERIAL PRIMARY KEY,
-    order_id BIGINT REFERENCES wms_schema.orders(id),
+    order_id BIGINT REFERENCES wms_schema.orders(id) ON DELETE CASCADE,
     product_id BIGINT REFERENCES wms_schema.products(id),
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL, -- Price at the time of order
@@ -114,7 +113,7 @@ CREATE TABLE IF NOT EXISTS wms_schema.shipments (
 -- Payments Table
 CREATE TABLE IF NOT EXISTS wms_schema.payments (
     id BIGSERIAL PRIMARY KEY,
-    order_id BIGINT REFERENCES wms_schema.orders(id),
+    order_id BIGINT REFERENCES wms_schema.orders(id) ON DELETE CASCADE,
     payment_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     amount DECIMAL(10, 2) NOT NULL,
     payment_method VARCHAR(50), -- e.g., 'Credit Card', 'PayPal', 'Bank Transfer'
