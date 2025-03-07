@@ -65,65 +65,69 @@ Not all of the services here exist. Probably some of them wil end up not existin
 
 ## 1. Order Creation
 
-- **Customer** places an order through an online platform or a sales representative.
-- **Sales Representative** may manually enter orders for customers.
+- **Role:** Stock Logistics Coordinator (places an order for our own business)
 - **Service:** `order-service` - Handles the creation and management of customer orders.
 - **External Integrations:**
-  - E-commerce platforms: `Shopify`, `Magento`
-  - CRM systems for customer data synchronization
+  - CRM systems for customer data synchronization - validate if the customer is valid and has authorization to draw on a warehouse.
+- **Status:** Created
 
 ## 2. Order Processing
 
-- **Order Management System (OMS)** validates the order and checks inventory.
-- **Inventory Manager** ensures stock is allocated for fulfillment.
+- **Role:** Order Management System (OMS) validates the order and checks inventory. Inventory Supervisor oversees stock allocation (no actions required).
 - **Services:**
-  - `inventory-service` - Manages inventory levels and allocates stock for orders.
-  - `scheduling-service` - Schedules orders for fulfillment based on inventory and capacity.
+  - `inventory-service` - Manages inventory levels.
+  - `order-service` - Allocates stock for orders.
+  - `scheduling-service` - Schedules orders for fulfillment based on inventory and capacity. (Not needed now)
 - **External Integrations:**
-  - ERP systems for inventory updates
-  - Supplier systems for stock replenishment
+  - ERP systems for inventory updates - Not needed.
+  - Supplier systems for stock replenishment - Not needed.
+- **Status:**
+  - processing -> error (on inventory check failure)
+  - processing -> ready for picking (stock reserved for picking)
 
 ## 3. Picking
 
-- **Warehouse Operatives** retrieve products from storage.
-- **Automated Systems (AGVs, barcode/RFID scanners)** assist in locating and transporting items.
+- **Role:** Warehouse Operator or Forklift / AGV Operator retrieve products from storage.
 - **Services:**
   - `order-service` - Generates pick lists and coordinates the picking process.
+  - `inventory-service` - Coordinates the picking process.
   - `automation-service` - Integrates with AGVs and automation tools for efficient picking.
 - **External Integrations:**
   - IoT devices: `RFID scanners`, `barcode systems` for real-time tracking
-  - Warehouse robotics API
+  - Warehouse robotics API -- emulate on automation service by pausing time between progressing the picking
+- **Status:**
+  - Ready for picking -> error (if any error in picking service)
+  - Ready for picking -> picking
+  - Picking -> error (on any automation error)
+  - Picking -> ready for packing (items are on the packing spot)
 
 ## 4. Packing
 
-- **Packing Staff** inspect, package, and label items for shipping.
-- **Service:** `order-service` - Manages the packing process, ensuring items are correctly packaged and labeled.
+- **Role:** Packing Staff inspect, package, and label items for shipping. (To implement in later releases)
+- **Service:** `automation-service`, `order-service` - Manages the packing process, ensuring items are correctly packaged and labeled.
 - **External Integrations:**
-  - Label printing systems
-  - Packaging automation solutions
+  - Label printing systems - stub
+  - Packaging automation solutions - not in the MVP
+- **Status:**
+  - ready for packing -> packing
+  - packing -> packed
+  - packed -> ready for order validation
+  - ready for order validation -> validation
+  - validation -> ready for shipping
+  - With error flows at every step
 
 ## 5. Shipping
 
-- **Shipping Coordinators** organize shipments and assign carriers.
-- **Logistics Partners/Carriers** transport packages to the customer.
+- **Role:** Outbound Coordinator organize shipments and assign carriers. Logistics Partners/Carriers transport packages to the customer. (External role in the Carrier company, doesn't use WMS)
+- **Alternate flow:** **Outbound Coordinator** is checking the shipping site and assigning 'shipped' status on the UI.
 - **Service:** `order-service` - Organizes shipments, assigns carriers, and tracks deliveries.
 - **External Integrations:**
-  - Courier services: `FedEx`, `UPS`, `DHL`
-  - Transportation management systems (TMS)
-
-## 6. Delivery Confirmation
-
-- **Customer Service Representatives** provide updates on order status.
-- **Accounting Department** finalizes financial transactions post-delivery.
-- **Services:**
-  - `notification-service` - Sends updates to customers regarding order status and delivery confirmations.
-  - `order-service` - Handles financial transactions, invoicing, and payment processing post-delivery.
-- **External Integrations:**
-  - Payment gateways: `Stripe`, `PayPal`
-  - Customer support platforms: `Zendesk`, `Salesforce Service Cloud`
-
-This flow ensures efficient order fulfillment, leveraging automation, external integrations, and human roles to optimize warehouse operations.
-
+  - Courier services: `FedEx`, `UPS`, `DHL`, `Kityk Cargo Logistics System (KCLS)` - MVP only KCLS and manual if not KCLS
+  - Transportation management systems (TMS) - Ignore for now
+- **Status:**
+  - ready for shipping -> shipping
+  - shipping -> error (if shipping went bad)
+  - shipping -> shipped
 
 ## 🚀 Next Steps
 

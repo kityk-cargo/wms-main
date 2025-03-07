@@ -39,6 +39,12 @@
 - Follows system instructions for stock placements and retrievals.
 - Uses real-time WMS updates to track task completion.
 
+### **Packing Staff**
+- Inspects, packages, and labels items for shipping.
+- Ensures that packed items meet quality and safety standards.
+- Works with Warehouse Operators and Outbound Coordinators to prepare shipments.
+- Uses WMS to track packed inventory and generate shipping labels.
+
 ## 3. Shipping & Receiving Roles
 
 ### **Inbound Coordinator**
