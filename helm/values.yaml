@@ -1,0 +1,29 @@
+# Default values for wms-main Helm chart
+
+# Define services and their Docker images
+services:
+  orderService:
+    image: "ghcr.io/kityk-cargo/wms-inventory-management/wms-inventory-management:latest"
+    replicas: 1
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: "jdbc:postgresql://host:port/postgres?currentSchema=wms_schema"
+      - name: SPRING_DATASOURCE_USERNAME
+        value: "user"
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: "password"
+  inventoryService:
+    image: "ghcr.io/kityk-cargo/wms-order-management/wms-order-management:latest"
+    replicas: 1
+    env:
+      - name: DATABASE_URL
+        value: "host:port/postgres"
+      - name: DATABASE_SCHEMA
+        value: "wms_schema"
+      - name: DATABASE_USER
+        value: "user"
+      - name: DATABASE_PASSWORD
+        value: "password"
+  notificationService:
+    image: "ghcr.io/kityk-cargo/wms-notification/wms-notification:latest"
+    replicas: 1

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: wms-main
+version: 0.1.0
+description: A Helm chart for deploying WMS services
+
+# This is a basic example and can be expanded with dependencies and other configurations as needed. 

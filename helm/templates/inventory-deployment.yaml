@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-inventory-service
+spec:
+  replicas: {{ index .Values.services "inventory-service" "replicas" }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-inventory-service
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-inventory-service
+    spec:
+      containers:
+        - name: inventory-service
+          image: {{ index .Values.services "inventory-service" "image" }}
+          env:
+          {{- range (index .Values.services "inventory-service" "env") }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+          {{- end }} 

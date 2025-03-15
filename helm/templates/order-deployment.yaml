@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-order-service
+spec:
+  replicas: {{ index .Values.services "order-service" "replicas" }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-order-service
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-order-service
+    spec:
+      containers:
+        - name: order-service
+          image: {{ index .Values.services "order-service" "image" }}
+          env:
+          {{- range (index .Values.services "order-service" "env") }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+          {{- end }}

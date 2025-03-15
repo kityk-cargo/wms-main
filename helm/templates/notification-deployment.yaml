@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-notification-service
+spec:
+  replicas: {{ index .Values.services "notification-service" "replicas" }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-notification-service
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-notification-service
+    spec:
+      containers:
+        - name: notification-service
+          image: {{ index .Values.services "notification-service" "image" }} 
