@@ -2,7 +2,7 @@
 
 # Define services and their Docker images
 services:
-  orderService:
+  order-service:
     image: "ghcr.io/kityk-cargo/wms-inventory-management/wms-inventory-management:latest"
     replicas: 1
     env:
@@ -12,7 +12,7 @@ services:
         value: "user"
       - name: SPRING_DATASOURCE_PASSWORD
         value: "password"
-  inventoryService:
+  inventory-service:
     image: "ghcr.io/kityk-cargo/wms-order-management/wms-order-management:latest"
     replicas: 1
     env:
@@ -24,6 +24,6 @@ services:
         value: "user"
       - name: DATABASE_PASSWORD
         value: "password"
-  notificationService:
+  notification-service:
     image: "ghcr.io/kityk-cargo/wms-notification/wms-notification:latest"
     replicas: 1

@@ -14,4 +14,7 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: {{ index .Values.services "notification-service" "image" }} 
+          image: {{ index .Values.services "notification-service" "image" }}
+          ports:
+            - containerPort: 8000
+              protocol: TCP 
