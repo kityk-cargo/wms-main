@@ -15,6 +15,9 @@ spec:
       containers:
         - name: order-service
           image: {{ index .Values.services "order-service" "image" }}
+          {{- if hasKey (index .Values.services "order-service") "imagePullPolicy" }}
+          imagePullPolicy: {{ index .Values.services "order-service" "imagePullPolicy" }}
+          {{- end }}
           ports:
             - containerPort: 8080
               protocol: TCP

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-ui-service
+spec:
+  {{- if hasKey (index .Values.services "ui-service") "enabled" }}
+  {{- if index .Values.services "ui-service" "enabled" }}
+  replicas: {{ index .Values.services "ui-service" "replicas" }}
+  {{- else }}
+  replicas: 0
+  {{- end }}
+  {{- else }}
+  replicas: {{ index .Values.services "ui-service" "replicas" }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-ui-service
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-ui-service
+    spec:
+      containers:
+        - name: ui-service
+          image: {{ index .Values.services "ui-service" "image" }}
+          {{- if hasKey (index .Values.services "ui-service") "imagePullPolicy" }}
+          imagePullPolicy: {{ index .Values.services "ui-service" "imagePullPolicy" }}
+          {{- end }}
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            {{- range $env := index .Values.services "ui-service" "env" }}
+            - name: {{ $env.name }}
+              value: {{ $env.value | quote }}
+            {{- end }} 

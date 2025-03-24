@@ -27,3 +27,9 @@ services:
   notification-service:
     image: "ghcr.io/kityk-cargo/wms-notification/wms-notification:latest"
     replicas: 1
+  ui-service:
+    image: "ghcr.io/kityk-cargo/wms-ui/wms-ui:latest"
+    replicas: 1
+    env:
+      - name: WMS_API_GATEWAY_URL
+        value: "http://apisix-gateway:9080"
