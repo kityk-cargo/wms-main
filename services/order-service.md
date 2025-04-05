@@ -11,29 +11,12 @@ The Order Management System (OMS) handles order creation, fulfillment, and statu
 - **Security:** OAuth2 + JWT authentication
 
 ## Core Features
-- **Create Order** (`POST /orders`)
-- **Retrieve Orders** (`GET /orders`, `GET /orders/{id}`)
-- **Update Order** (`PUT /orders/{id}`)
-- **Cancel Order** (`DELETE /orders/{id}`)
-- **Allocate Inventory** (`POST /orders/{id}/allocate`)
-- **Update Order Status** (`PUT /orders/{id}/status`)
-
-## API Example
-### Create Order
-```json
-{
-  "customer_id": "string",
-  "items": [{"product_id": "string", "quantity": 1}],
-  "shipping_address": {"street": "string", "city": "string"}
-}
-```
-
-### Update Order Status
-```json
-{
-  "status": "Processing"  
-}
-```
+- **Create Order**
+- **Retrieve Orders**
+- **Update Order** 
+- **Cancel Order**
+- **Allocate Inventory** 
+- **Update Order Status** 
 
 ## Integration with Inventory
 - **Stock Reservation:** On order creation
