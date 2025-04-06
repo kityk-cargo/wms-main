@@ -17,6 +17,7 @@ This document provides a set of guidelines for "vibe coding" with Cursor and Cla
 - Read .md files as documentation of possible intent. They might be outdated and not contain the ground truth though.
 - Update .md files when possible but don't add API documentation to them.
 - .md files are for 'how to do something' and 'what something does' — not for 'code/API docs'.
+- Remove anything irrelevant from the .md files.
 
 ## Testing Guidelines
 

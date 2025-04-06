@@ -17,7 +17,7 @@ This Warehouse Management System (WMS) is designed for a **medium-sized, general
 
 - **Framework:** React.js (**Next.js**) (Server-Side Rendering for performance)
 - **UI Framework:** Tailwind CSS or Material UI
-- **State Management:** RTK Query / Redux Toolkit
+- **State Management:** RTK Query / MobX
 
 ### **Databases**
 
