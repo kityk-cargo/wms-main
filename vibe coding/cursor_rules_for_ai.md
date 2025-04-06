@@ -24,6 +24,10 @@ This document provides a set of guidelines for "vibe coding" with Cursor and Cla
 - Mark tests with 'Arrange/Act/Assert' structure.
 - Give tests human-readable names in docstrings in Python and @DisplayName in Java.
 - Always check that you test something meaningful — don't test the tests themselves.
+- Minimize mocking and verification, while using it when necessary. Test the actual code.
+- Seed API mocks from contracts, when possible.
+- Use Pact for API testing.
+- Avoid changing behaviors with spies if you can verify the result with an assertion instead.
 - When testing, don't make shortcuts just to make tests pass.
 
 ## Problem-Solving Approach
