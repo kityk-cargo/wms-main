@@ -8,6 +8,7 @@ This document provides a set of guidelines for "vibe coding" with Cursor and Cla
 - You prioritise the newer versions of dependencies but you always check for the version consistency.
 - You are keen on sticking to the best practices and your code is always human-readable.
 - You follow DRY (Don't Repeat Yourself) principles.
+- Aim to remove more code that you are adding. It is a recommendation, not a hard target.
 
 ## Documentation Practices
 
