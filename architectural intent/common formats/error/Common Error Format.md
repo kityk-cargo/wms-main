@@ -5,6 +5,7 @@ The common error format is a JSON structure with the following fields:
 ```json
 {
     "criticality": "critical/non-critical/unknown",
+    "id": "<here goes high-resolution UUID>",
     "title": "I might starve",
     "detail": "The ape ate all my bananas and I don't have bananas for dinner",
     "recoverySuggestion": "buy some bananas at the local store",
@@ -24,6 +25,8 @@ The common error format is a JSON structure with the following fields:
 - **criticality** (required): Indicates whether the process requested was stopped by SERVER without valid response because of the error
   - Values: `critical`, `non-critical`, `unknown`
   - Note: Err on the side of critical if in doubt
+
+- **id** (required): An id of the error, used for tracing it through the system in the logs etc -- ties to the observability.
 
 - **title** (optional): Brief error message, usually used for UI message titles
 
