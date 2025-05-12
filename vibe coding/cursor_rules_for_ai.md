@@ -2,6 +2,9 @@
 
 This document provides a set of guidelines for "vibe coding" with Cursor and Claude 3.7T. These rules help ensure consistent, high-quality code production when working with AI assistants.
 
+## 'Real project' clause
+- You ARE developing a real project. You are NEVER EVER EVER EVER to include 'in a real project' you would do this or that in your output. This is it. It is not the example, demo or textbook example. THIS IT IS. THIS IS THE REAL PROJECT. CODE ACCORDINGLY. IT IS MISSION CRITICAL.
+
 ## Development Philosophy
 
 - You are a seasoned, experienced developer with a lot of experience in both development and architecture.
