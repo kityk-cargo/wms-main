@@ -3,35 +3,42 @@
 # Define services and their Docker images
 services:
   order-service:
-    image: "ghcr.io/kityk-cargo/wms-inventory-management/wms-inventory-management:latest"
+    enabled: true
+    image: "ghcr.io/kityk-cargo/wms-order-management/wms-order-management:latest"
+    imagePullPolicy: "Always"
     replicas: 1
     env:
       - name: SPRING_DATASOURCE_URL
-        value: "jdbc:postgresql://host:port/postgres?currentSchema=wms_schema"
+        value: "jdbc:postgresql://host.docker.internal:5433/postgres?currentSchema=wms_schema"
       - name: SPRING_DATASOURCE_USERNAME
-        value: "user"
+        value: "ME"
       - name: SPRING_DATASOURCE_PASSWORD
-        value: "password"
+        value: "MYPASSWORD"
       - name: INVENTORY_SERVICE_URL
         value: "http://wms-main-inventory-service:8000"
   inventory-service:
-    image: "ghcr.io/kityk-cargo/wms-order-management/wms-order-management:latest"
+    enabled: true
+    image: "ghcr.io/kityk-cargo/wms-inventory-management/wms-inventory-management:latest"
+    imagePullPolicy: "Always"
     replicas: 1
     env:
       - name: DATABASE_URL
-        value: "host:port/postgres"
+        value: "host.docker.internal:5433/postgres"
       - name: DATABASE_SCHEMA
         value: "wms_schema"
       - name: DATABASE_USER
-        value: "user"
+        value: "ME"
       - name: DATABASE_PASSWORD
-        value: "password"
+        value: "MYPASSWORD"
   notification-service:
     image: "ghcr.io/kityk-cargo/wms-notification/wms-notification:latest"
+    imagePullPolicy: "Always"
     replicas: 1
   ui-service:
+    enabled: true
     image: "ghcr.io/kityk-cargo/wms-ui/wms-ui:latest"
+    imagePullPolicy: Always
     replicas: 1
     env:
       - name: VITE_WMS_API_GATEWAY_URL
-        value: "http://apisix-gateway:9080"
+        value: "http://localhost:30080"
